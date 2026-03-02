@@ -1,33 +1,35 @@
 <script>
-  let apiResponse = null
-  let loading = false
-  
-  async function callHelloAPI() {
-    loading = true
-    try {
-      const res = await fetch('http://localhost:8000/api')
-      const data = await res.json()
-      apiResponse = data.message
-    } catch (error) {
-      apiResponse = `Error: ${error.message}`
-    }
-    loading = false
+  import Login from './page/Login.svelte';
+  import Room from './page/Room.svelte';
+  import Desktop from './page/desktop.svelte';  
+
+
+  let currentPage = 'desktop';
+
+
+  let roomId = '';
+
+  function handleLogin() {
+    currentPage = 'login';
+  }
+  function handleRoom(event) {
+    roomId = event.detail.roomId;
+    currentPage = 'room';
+  }
+
+  function handleHome() {
+    currentPage = 'desktop';
+    roomId = '';
   }
 </script>
 
-<main>
-  <h1>API串接</h1>
-  
-  <div>
-    <button on:click={callHelloAPI}>
-      {loading ? '載入中...' : '呼叫 API Hello'}
-    </button>
-    {#if apiResponse}
-      <p>{apiResponse}</p>
-    {/if}
-  </div>
-
-</main>
+{#if currentPage === 'desktop'}
+  <Desktop on:login={handleLogin} on:room={handleRoom} />
+{:else if currentPage === 'login'}
+  <Login on:login={handleHome} />
+{:else if currentPage === 'room'}
+  <Room {roomId} on:logout={handleHome} />
+{/if}
 
 <style>
 </style>
