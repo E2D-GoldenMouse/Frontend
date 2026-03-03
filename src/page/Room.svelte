@@ -19,7 +19,7 @@
 
   <div class="room-content">
     <p>welcome</p>
-    <p>room id: <strong>{roomId}</strong></p>
+    <p >room id: <strong>{roomId}</strong></p>
   </div>
 </div>
 

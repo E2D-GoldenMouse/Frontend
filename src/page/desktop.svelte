@@ -41,19 +41,45 @@
 </div>
 
 <style>
+.login-container{
+  display: flex;
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.top-right-btn{
+  margin: 30px 50px;
+  display: flex;
+  align-self: flex-end;
+}
 .title {
   font-size: 3rem;
   color: white;
+  width: 600px;
+  margin-bottom: 70px;
   background-color: #9B9B9B;
   border-radius: 0.5rem;
-padding: 1rem;
+  padding: 1rem;
+}
+#room-input{
+  width: 400px;
 }
 .login-box {
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
+  align-items: center;
   height: 100vh;
+  width: 100vh;
 }
 .input-group {
   gap: 10px;
+}
+.create-btn{
+  display: flex;
+  width: 100px;
+  align-items: center;
+  justify-content: center;
 }
 </style>
