@@ -1,12 +1,22 @@
 <script>
   import { createEventDispatcher } from 'svelte';
+  import {post} from '../api/api.js'
 
   const dispatch = createEventDispatcher();
   let username = '';
   let password = '';
+  let s="";
 
-  function enter() {
-    dispatch('login', { roomId: username });
+  async function enter() {
+    try{
+      s="loading...";
+      const result=await post('/login',{"username":username,"password":password});
+      s="登入成功!";
+      dispatch('login', { username: username });
+    }catch(err){
+      s=err.message;
+    }
+    //加上login api
   }
   function signup(){
     dispatch('signup');
@@ -33,6 +43,7 @@
       />
       <button on:click={() => console.log('forget')}>forget</button>
     </div>
+    <p class="mes">{s}</p>
     <div style="display: flex; gap: 20px; justify-content: center;">
       <button on:click={signup}>註冊</button>
       <button on:click={enter}>ENTER</button>
@@ -50,6 +61,7 @@
   }
   .login-form {
     display: flex;
+    align-items: center;
     flex-direction: column;
     width: 300px;
     gap: 10px;

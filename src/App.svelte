@@ -8,6 +8,7 @@
 
 
   let roomId = '';
+  let username = '';
 
   function handleLogin() {
     currentPage = 'login';
@@ -20,16 +21,26 @@
     currentPage = 'room';
   }
 
-  function handleHome() {
+  function getusername(event){ //取得登入後username 要傳給Desktop的
+    username = event.detail.username;
+    currentPage = 'desktop';
+  }
+
+  function handleLogout(){ //登出
+    currentPage = 'desktop';
+    username = '';
+  }
+
+  function handleHome() { //返回主畫面
     currentPage = 'desktop';
     roomId = '';
   }
 </script>
 
 {#if currentPage === 'desktop'}
-  <Desktop on:login={handleLogin} on:room={handleRoom} />
+  <Desktop {username} on:login={handleLogin} on:room={handleRoom} on:logout={handleLogout}/> 
 {:else if currentPage === 'login'}
-  <Login on:login={handleHome}  on:signup={handleSignup}/>
+  <Login on:login={getusername}  on:signup={handleSignup}/>
 {:else if currentPage === 'signup'}
   <Signup on:signup={handleHome} />
 {:else if currentPage === 'room'}

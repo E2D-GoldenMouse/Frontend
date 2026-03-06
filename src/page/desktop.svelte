@@ -1,11 +1,16 @@
 <script>
   import { createEventDispatcher } from 'svelte';
+  export let username = '';
 
   let roomNumber = '';
   const dispatch = createEventDispatcher();
 
   function handleLogin() {
     dispatch('login');
+  }
+
+  function handleLogout() {
+    dispatch('logout');
   }
 
   function generateRandomRoom() {
@@ -16,9 +21,16 @@
 
 
 </script>
-
 <div class="login-container">
-  <button on:click={handleLogin} class="top-right-btn">login</button>
+  <!-- 沒有username時顯示login  有時顯示logout -->
+  {#if !username} 
+    <button on:click={handleLogin} class="top-right-btn">login</button>
+  {:else}
+    <div class="logbox">
+      <p class="mes">Welcome {username}!</p>
+      <button on:click={handleLogout} class="top-right-btn">logout</button>
+    </div>
+  {/if}
   <div class="login-box">
     <h1 class="title">Quoridor</h1>
     
@@ -54,6 +66,10 @@
   display: flex;
   align-self: flex-end;
 }
+.logbox{
+  display: flex;
+  width: 100%;
+}
 .title {
   font-size: 3rem;
   color: white;
@@ -81,5 +97,8 @@
   width: 100px;
   align-items: center;
   justify-content: center;
+}
+.mes{
+  margin-right: auto;
 }
 </style>

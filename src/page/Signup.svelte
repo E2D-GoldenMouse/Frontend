@@ -1,13 +1,23 @@
 <script>
   import { createEventDispatcher } from 'svelte';
+  import {post} from '../api/api.js'
 
   const dispatch = createEventDispatcher();
   let username = '';
   let password = '';
   let email='';
+  let s="";
 
-  function enter() {
-    dispatch('signup', { roomId: username });
+  async function enter() {
+    try{
+      s="loading...";
+      const result=await post('/register',{"username":username,"password":password,"email":email});
+      s="註冊成功!";
+      dispatch('signup');
+    }catch(err){
+      s=err.message;
+    }
+    //加上signup api
   }
 </script>
 
@@ -32,6 +42,7 @@
       placeholder="Email"
       on:keydown={(e) => e.key === 'Enter' && enter()}
     />
+    <p>{s}</p>
     <div style="display: flex; gap: 20px; justify-content: center;">
       <button on:click={enter}>ENTER</button>
     </div>
@@ -48,6 +59,7 @@
   }
   .login-form {
     display: flex;
+    align-items: center;
     flex-direction: column;
     width: 300px;
     gap: 10px;
