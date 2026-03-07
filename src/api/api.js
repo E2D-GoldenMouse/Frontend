@@ -49,11 +49,13 @@ export const getApi=()=>get('');
       },
       body:JSON.stringify(payload)
     });
+    const data = await res.json();
     if (!res.ok) {
-      const data=await res.json();
+      if(res.status===422)
+        throw new Error("格式錯誤");
       throw new Error(data.detail);
     }
-    return await res.json();
+    return data;
   }catch(error){
     throw new Error(error.message);
   }
