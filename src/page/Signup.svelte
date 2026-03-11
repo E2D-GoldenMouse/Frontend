@@ -11,7 +11,7 @@
   async function enter() {
     try{
       s="loading...";
-      const result=await post('/register',{"username":username,"password":password,"email":email});
+      const result=await post('/register',JSON.stringify({"username":username,"password":password,"email":email}),'application/json');
       s="註冊成功!";
       dispatch('signup');
     }catch(err){

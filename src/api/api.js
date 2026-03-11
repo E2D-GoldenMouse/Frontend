@@ -40,14 +40,14 @@ async function get(path){
 
 export const getApi=()=>get('');
 
- export async function post(path,payload){
+ export async function post(path,payload,type){
   try{
     const res=await fetch(`${API_BASE}${path}`,{
       method:'POST',
       headers:{
-        'Content-Type':'application/json',
+        'Content-Type':type,
       },
-      body:JSON.stringify(payload)
+      body:payload
     });
     const data = await res.json();
     if (!res.ok) {

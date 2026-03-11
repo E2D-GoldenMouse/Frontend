@@ -8,9 +8,12 @@
   let s="";
 
   async function enter() {
+    const FormData=new URLSearchParams();
+    FormData.append('username',username);
+    FormData.append('password',password);
     try{
       s="loading...";
-      const result=await post('/login',{"username":username,"password":password});
+      const result=await post('/login',FormData,'application/x-www-form-urlencoded');
       s="登入成功!";
       dispatch('login', { username: username });
     }catch(err){
