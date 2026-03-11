@@ -1,24 +1,46 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import {post} from '../api/api.js'
+  import {onMount} from 'svelte'
 
   const dispatch = createEventDispatcher();
   let username = '';
   let password = '';
   let email='';
   let s="";
+  $: jwtToken = ""; 
+
+  onMount(() => {
+    window['verify']=(token)=>{
+      console.log("成功拿到 Token:", token);
+      jwtToken=token;
+    }
+    // 檢查 turnstile 是否載入完成並手動渲染
+    if (window['turnstile']) {
+      window['turnstile'].render('.cf-turnstile');
+    }
+    console.log()
+  });
 
   async function enter() {
+    /** @type {HTMLInputElement} */
+    const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
+
+    if(!turnstileResponse){
+      s='請先完成機器人驗證';
+      return ;
+    }
+
     try{
       s="loading...";
-      const result=await post('/register',JSON.stringify({"username":username,"password":password,"email":email}),'application/json');
+      const result=await post('/register',JSON.stringify({"username":username,"password":password,"email":email,"captcha_token":jwtToken}),'application/json');
       s="註冊成功!";
       dispatch('signup');
     }catch(err){
       s=err.message;
     }
-    //加上signup api
   }
+
 </script>
 
 <div class="login-container">
@@ -42,6 +64,7 @@
       placeholder="Email"
       on:keydown={(e) => e.key === 'Enter' && enter()}
     />
+    <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-callback="verify"></div>
     <p>{s}</p>
     <div style="display: flex; gap: 20px; justify-content: center;">
       <button on:click={enter}>ENTER</button>
@@ -63,5 +86,8 @@
     flex-direction: column;
     width: 300px;
     gap: 10px;
+  }
+  .cf-turnstile{
+    margin-top: 20px;
   }
 </style>

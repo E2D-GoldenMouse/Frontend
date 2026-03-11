@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import {post} from '../api/api.js'
 
   const dispatch = createEventDispatcher();
