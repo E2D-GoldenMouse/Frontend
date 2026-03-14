@@ -37,7 +37,13 @@
       s="註冊成功!";
       dispatch('signup');
     }catch(err){
-      s=err.message;
+      if(username.length<4){
+        s='帳號長度需大於4位';
+      }else if(password.length<8){
+        s='密碼長度需大於8位';
+      }else{
+        s=err.message;
+      }
     }
   }
 
