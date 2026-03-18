@@ -24,16 +24,20 @@
 
   async function enter() {
     if(!jwtToken){
+      document.getElementById('mes').style.color='#af1817';
       s='請先完成機器人驗證';
       return ;
     }
 
     try{
+      document.getElementById('mes').style.color='black';
       s="loading...";
       const result=await post('/register',JSON.stringify({"username":username,"password":password,"email":email,"captcha_token":jwtToken}),'application/json');
+      document.getElementById('mes').style.color='#18af17';
       s="註冊成功!";
       dispatch('signup');
     }catch(err){
+      document.getElementById('mes').style.color='#af1817';
       if(username.length<4){
         s='帳號長度需大於4位';
       }else if(password.length<8){
@@ -68,7 +72,7 @@
       on:keydown={(e) => e.key === 'Enter' && enter()}
     />
     <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-callback="verify"></div>
-    <p>{s}</p>
+    <p id="mes">{s}</p>
     <div style="display: flex; gap: 20px; justify-content: center;">
       <button on:click={enter}>ENTER</button>
     </div>

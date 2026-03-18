@@ -12,11 +12,14 @@
     FormData.append('username',username);
     FormData.append('password',password);
     try{
+      document.getElementById('mes').style.color='black';
       s="loading...";
       const result=await post('/login',FormData,'application/x-www-form-urlencoded');
+      document.getElementById('mes').style.color='#18af17';
       s="登入成功!";
       dispatch('login', { username: username });
     }catch(err){
+      document.getElementById('mes').style.color='#af1817';
       s=err.message;
     }
     //加上login api
@@ -46,7 +49,7 @@
       />
       <button on:click={() => console.log('forget')}>forget</button>
     </div>
-    <p class="mes">{s}</p>
+    <p id="mes">{s}</p>
     <div style="display: flex; gap: 20px; justify-content: center;">
       <button on:click={signup}>註冊</button>
       <button on:click={enter}>ENTER</button>
