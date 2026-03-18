@@ -23,10 +23,7 @@
   });
 
   async function enter() {
-    /** @type {HTMLInputElement} */
-    const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
-
-    if(!turnstileResponse){
+    if(!jwtToken){
       s='請先完成機器人驗證';
       return ;
     }
