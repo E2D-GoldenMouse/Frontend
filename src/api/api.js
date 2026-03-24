@@ -29,7 +29,7 @@
 
 const API_BASE='http://localhost:8000/api';
 
-async function get(path){
+export async function get(path){
   try{
     const res=await fetch(`${API_BASE}${path}`);
     return await res.json();
@@ -37,8 +37,6 @@ async function get(path){
     throw new Error(error.message);
   }
 }
-
-export const getApi=()=>get('');
 
  export async function post(path,payload,type){
   try{

@@ -47,10 +47,13 @@
       }
     }
   }
-
+  function back(){
+    dispatch('back');
+  }
 </script>
 
 <div class="login-container">
+  <button on:click={back} class="top-right-btn">back</button>
   <h1>Sign Up</h1>
   <div class="login-form">
     <input
@@ -84,8 +87,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 100px;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
+  }
+  .top-right-btn{
+    margin: 30px 50px;
+    display: flex;
+    align-self: flex-end;
   }
   .login-form {
     display: flex;

@@ -27,9 +27,13 @@
   function signup(){
     dispatch('signup');
   }
+  function back(){
+    dispatch('home');
+  }
 </script>
 
 <div class="login-container">
+  <button on:click={back} class="top-right-btn">back</button>
   <h1>Log In</h1>
   <div class="login-form">
     <div class="inputs">
@@ -62,8 +66,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 100px;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
+  }
+  .top-right-btn{
+    margin: 30px 50px;
+    display: flex;
+    align-self: flex-end;
   }
   .login-form {
     display: flex;

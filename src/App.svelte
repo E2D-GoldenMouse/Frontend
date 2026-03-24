@@ -40,9 +40,9 @@
 {#if currentPage === 'desktop'}
   <Desktop {username} on:login={handleLogin} on:room={handleRoom} on:logout={handleLogout}/> 
 {:else if currentPage === 'login'}
-  <Login on:login={getusername}  on:signup={handleSignup}/>
+  <Login on:login={getusername}  on:signup={handleSignup} on:home={handleLogout}/>
 {:else if currentPage === 'signup'}
-  <Signup on:signup={handleHome} />
+  <Signup on:signup={handleHome} on:back={handleLogin}/>
 {:else if currentPage === 'room'}
   <Room {roomId} on:logout={handleHome} />
 {/if}
