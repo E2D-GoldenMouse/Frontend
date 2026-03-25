@@ -7,6 +7,9 @@
   let password = '';
   let s="";
 
+  function back() {
+    dispatch('desktop');
+  }
   async function enter() {
     const FormData=new URLSearchParams();
     FormData.append('username',username);
@@ -27,13 +30,10 @@
   function signup(){
     dispatch('signup');
   }
-  function back(){
-    dispatch('home');
-  }
 </script>
 
 <div class="login-container">
-  <button on:click={back} class="top-right-btn">back</button>
+  <button on:click={back} class="top-right-btn">Back</button>
   <h1>Log In</h1>
   <div class="login-form">
     <div class="inputs">
@@ -55,8 +55,8 @@
     </div>
     <p id="mes">{s}</p>
     <div style="display: flex; gap: 20px; justify-content: center;">
-      <button on:click={signup}>註冊</button>
-      <button on:click={enter}>ENTER</button>
+      <button on:click={signup}>Sign Up</button>
+      <button on:click={enter}>Enter</button>
     </div>
   </div>
 </div>

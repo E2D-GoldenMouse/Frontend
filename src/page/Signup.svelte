@@ -3,6 +3,10 @@
   import {post} from '../api/api.js'
   import {onMount} from 'svelte'
 
+  function back() {
+    dispatch('desktop');
+  }
+
   const dispatch = createEventDispatcher();
   let username = '';
   let password = '';
@@ -47,13 +51,10 @@
       }
     }
   }
-  function back(){
-    dispatch('back');
-  }
 </script>
 
 <div class="login-container">
-  <button on:click={back} class="top-right-btn">back</button>
+  <button on:click={back} class="top-right-btn">Back</button>
   <h1>Sign Up</h1>
   <div class="login-form">
     <input
@@ -76,9 +77,7 @@
     />
     <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-callback="verify"></div>
     <p id="mes">{s}</p>
-    <div style="display: flex; gap: 20px; justify-content: center;">
-      <button on:click={enter}>ENTER</button>
-    </div>
+      <button on:click={enter}>Enter</button>
   </div>
 </div>
 
