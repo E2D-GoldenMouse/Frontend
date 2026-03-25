@@ -33,7 +33,7 @@
 </script>
 
 <div class="login-container">
-  <button on:click={back} class="top-right-btn">BACK</button>
+  <button on:click={back} class="top-right-btn">Back</button>
   <h1>Log In</h1>
   <div class="login-form">
     <div class="inputs">
@@ -55,9 +55,8 @@
     </div>
     <p id="mes">{s}</p>
     <div style="display: flex; gap: 20px; justify-content: center;">
-      <button on:click={back}>CANCEL</button>
-      <button on:click={signup}>SIGN UP</button>
-      <button on:click={enter}>ENTER</button>
+      <button on:click={signup}>Sign Up</button>
+      <button on:click={enter}>Enter</button>
     </div>
   </div>
 </div>
