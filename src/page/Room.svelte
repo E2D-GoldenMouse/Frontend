@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import Rule from './Rule.svelte'; 
-  import People from '../lib/people.svelte'
+  import People from '../lib/player.svelte'
 
   export let roomId = '';
   let players=['aaaa','bbbb','cccc']; //舉例用的
