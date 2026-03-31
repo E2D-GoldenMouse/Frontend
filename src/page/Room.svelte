@@ -1,8 +1,11 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import Rule from './Rule.svelte'; // 你的規則元件
+  import Rule from './Rule.svelte'; 
+  import People from '../lib/people.svelte'
 
   export let roomId = '';
+  let players=['aaaa','bbbb','cccc']; //舉例用的
+  const colors=["#ED9E92","#99E884","#81BDD5","#AF7ED2"];
   const dispatch = createEventDispatcher();
 
   let showRules = false;
@@ -15,17 +18,22 @@
     showRules = !showRules;
   }
 </script>
-<div class="room-container">
-  <div class="room-header">
-    <h1>room #{roomId}</h1>
-      <button on:click={toggleRules} class="rule-btn">規則</button>
-    
-  </div>
-  <button on:click={handleLogout} class="logout-btn">退出</button>
 
-  <div class="room-content">
-    <p>welcome</p>
-    <p>room id: <strong>{roomId}</strong></p>
+<div class="room-container">
+  <div class="header">
+    <h2>room: {roomId}</h2>
+  </div>
+  <div class="player">
+    {#each players as player,i(i)}
+      <div style="color:{colors[i]}">
+        <People name={player} />
+      </div>
+    {/each}
+  </div>
+  <div class="btn">
+    <button on:click={handleLogout} class="back-btn">Back</button>
+    <button on:click={toggleRules} class="rule-btn">Rule</button>
+    <button class="start-btn">Start</button>
   </div>
 
   {#if showRules}
@@ -36,18 +44,39 @@
 <style>
 .room-container {
   position: relative;
-  padding: 1rem;
-}
-
-.room-header {
+  height: 90vh;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
 }
 
+.header {
+  display: flex;
+  font-size: 25px;
+  height: 30px;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 30px;  
+}
 
-.rule-btn, .logout-btn {
-  padding: 0.3rem 0.8rem;
+.player{
+  display: flex;
+  flex-direction: row;
+  gap: 15%;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  margin-bottom: 30px;
+  gap: 30%;
   cursor: pointer;
+}
+
+.rule-btn{
+  background-color: #6e6e6e;
 }
 </style>

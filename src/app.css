@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+25&display=swap');
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
+  font-family: "Jersey 25", sans-serif;
+  /* line-height: 1.5;
+  font-weight: 400; */
 
   color-scheme: light dark;
   color: #000000 ;
@@ -11,10 +14,11 @@
 
 body {
   margin: 20px;
-
 }
 
 button {
+  font-family: inherit;
+  font-size: 1.1rem;
   background-color: #2c2c2c;
   color: #ffffff;
   border-radius: 0.5rem;
@@ -57,3 +61,8 @@ input {
   padding: 0.5rem 1rem;
 }
 
+.jersey-25-regular {
+  font-family: "Jersey 25", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
