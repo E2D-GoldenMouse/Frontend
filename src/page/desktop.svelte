@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   export let username = '';
+  export let isLogin;
 
   let roomNumber = '';
   const dispatch = createEventDispatcher();
@@ -23,7 +24,7 @@
 </script>
 <div class="login-container">
   <!-- 沒有username時顯示login  有時顯示logout -->
-  {#if !username} 
+  {#if !isLogin} 
     <button on:click={handleLogin} class="top-right-btn">login</button>
   {:else}
     <div class="logbox">

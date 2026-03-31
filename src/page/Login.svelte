@@ -1,14 +1,19 @@
 <script>
   import { createEventDispatcher, onMount } from 'svelte';
   import {post} from '../api/api.js'
+  import {login} from '../lib/auth.js'
 
   const dispatch = createEventDispatcher();
   let username = '';
-  let password = '';
-  let s="";
+  $: password = '';
+  $: showPwd = false;
+  let s='';
 
   function back() {
     dispatch('desktop');
+  }
+  function pwdVisible(){
+    showPwd=!showPwd;
   }
   async function enter() {
     const FormData=new URLSearchParams();
@@ -20,12 +25,12 @@
       const result=await post('/login',FormData,'application/x-www-form-urlencoded');
       document.getElementById('mes').style.color='#18af17';
       s="登入成功!";
-      dispatch('login', { username: username });
+      login(result.access_token);
+      dispatch('login');
     }catch(err){
       document.getElementById('mes').style.color='#af1817';
       s=err.message;
     }
-    //加上login api
   }
   function signup(){
     dispatch('signup');
@@ -46,12 +51,18 @@
     </div>
     <div class="inputs">
       <input
-        type="password"
+        type={showPwd?"text":"password"}
         bind:value={password}
         placeholder="密碼"
         on:keydown={(e) => e.key === 'Enter' && enter()}
       />
-      <button on:click={() => console.log('forget')}>forget</button>
+      <button on:click={pwdVisible} class="pwdShow">
+        {#if showPwd}
+          <img src="/src/assets/eye.png" alt="close"  height=20px width=20px>
+        {:else}
+          <img src="/src/assets/close-eye.png" alt="show" height=20px width=20px>
+        {/if}
+      </button>
     </div>
     <p id="mes">{s}</p>
     <div style="display: flex; gap: 20px; justify-content: center;">
@@ -88,13 +99,14 @@
     margin: 0px;
   }
   .inputs button{
-    background-color: #878787;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    padding: 5px;
+    background-color: #ffffff;
+    border: none;
+    padding: 0;
     margin-left: auto;
     margin-right: 10px;
-    font-size: 10px;
+  }
+  .inputs button::after{
+    display: none;
   }
   .inputs{
     background-color: #ffffff;
@@ -106,8 +118,5 @@
     text-align: left;
     align-items: center;
     display: flex;
-  }
-  .inputs button:hover{
-    border-color: #2C2C2C;
   }
 </style>

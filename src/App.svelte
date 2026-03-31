@@ -1,14 +1,22 @@
 <script>
+  import {onMount} from 'svelte';
+  import {authStore,logout,getusername} from './lib/auth.js'
   import Login from './page/Login.svelte';
   import Room from './page/Room.svelte';
   import Desktop from './page/desktop.svelte';  
   import Signup from './page/Signup.svelte';
 
   let currentPage = 'desktop';
-
-
   let roomId = '';
-  let username = '';
+  
+  onMount(()=>{
+    window.addEventListener('token_expired', ()=>{
+      alert('登入已過期，請重新登入');
+      currentPage='login';
+    })
+    if(localStorage.getItem('token'))
+      getusername();
+  })
 
   function handleLogin() {
     currentPage = 'login';
@@ -21,14 +29,9 @@
     currentPage = 'room';
   }
 
-  function getusername(event){ //取得登入後username 要傳給Desktop的
-    username = event.detail.username;
-    currentPage = 'desktop';
-  }
-
   function handleLogout(){ //登出
     currentPage = 'desktop';
-    username = '';
+    logout();
   }
 
   function handleHome() { //返回主畫面
@@ -38,11 +41,11 @@
 </script>
 
 {#if currentPage === 'desktop'}
-  <Desktop {username} on:login={handleLogin} on:room={handleRoom} on:logout={handleLogout}/> 
+  <Desktop username={$authStore.user} isLogin={$authStore.isLogin} on:login={handleLogin} on:room={handleRoom} on:logout={handleLogout}/> 
 {:else if currentPage === 'login'}
-  <Login on:login={getusername}  on:signup={handleSignup}  on:desktop={handleHome}/>
+  <Login on:login={handleHome}  on:signup={handleSignup}  on:desktop={handleHome}/>
 {:else if currentPage === 'signup'}
-  <Signup on:signup={handleHome}  on:desktop={handleHome}/>
+  <Signup on:signup={handleHome}  on:login={handleLogin}/>
 {:else if currentPage === 'room'}
   <Room {roomId} on:logout={handleHome} />
 {/if}

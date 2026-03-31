@@ -14,9 +14,8 @@
 </script>
 
 <div class="rules-popup">
-  <h2>遊戲規則</h2>
-
   {#if !isEnglish}
+  <h2>遊戲規則</h2>
   <p>
 遊戲將在9*9的棋盤進行，分別有2人和2人以上兩種規則。
 
@@ -33,8 +32,8 @@
 3.每局遊戲玩家將有1次機會可將牆面打破。
   </p>
   {:else}
+  <h2>Game Rules</h2>
   <p>
-Game Rules
 The game is played on a 9x9 board and has two rule sets: one for 2 players and one for more than 2 players.
 
 Winning Condition
@@ -54,7 +53,7 @@ Each player may break one wall once per game.
   {/if}
 
   <div class="buttons">
-    <button class="close-btn" on:click={close}>關閉</button>
+    <button class="close-btn" on:click={close}>{isEnglish ? 'Close' : '關閉'}</button>
     <button class="toggle-lang-btn" on:click={toggleLang}>
       {isEnglish ? '中文' : 'English'}
     </button>

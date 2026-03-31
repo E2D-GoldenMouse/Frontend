@@ -3,13 +3,10 @@
   import {post} from '../api/api.js'
   import {onMount} from 'svelte'
 
-  function back() {
-    dispatch('desktop');
-  }
-
   const dispatch = createEventDispatcher();
   let username = '';
-  let password = '';
+  $: password = '';
+  $: showPwd = false;
   let email='';
   let s="";
   $: jwtToken = ""; 
@@ -26,6 +23,12 @@
     console.log()
   });
 
+  function back() {
+    dispatch('login');
+  }
+  function pwdVisible(){
+    showPwd=!showPwd;
+  }
   async function enter() {
     if(!jwtToken){
       document.getElementById('mes').style.color='#af1817';
@@ -57,24 +60,37 @@
   <button on:click={back} class="top-right-btn">Back</button>
   <h1>Sign Up</h1>
   <div class="login-form">
-    <input
-      type="text"
-      bind:value={username}
-      placeholder="帳號"
-      on:keydown={(e) => e.key === 'Enter' && enter()}
-    />
-    <input
-      type="password"
-      bind:value={password}
-      placeholder="密碼"
-      on:keydown={(e) => e.key === 'Enter' && enter()}
-    />
-    <input
-      type="text"
-      bind:value={email}
-      placeholder="Email"
-      on:keydown={(e) => e.key === 'Enter' && enter()}
-    />
+    <div class="inputs">
+      <input
+        type="text"
+        bind:value={username}
+        placeholder="帳號"
+        on:keydown={(e) => e.key === 'Enter' && enter()}
+      />
+    </div>
+    <div class="inputs">
+      <input
+        type={showPwd?"text":"password"}
+        bind:value={password}
+        placeholder="密碼"
+        on:keydown={(e) => e.key === 'Enter' && enter()}
+      />
+      <button on:click={pwdVisible} class="pwdShow">
+        {#if showPwd}
+          <img src="/src/assets/eye.png" alt="close"  height=20px width=20px>
+        {:else}
+          <img src="/src/assets/close-eye.png" alt="show" height=20px width=20px>
+        {/if}
+      </button>
+    </div>
+    <div class="inputs">
+      <input
+        type="text"
+        bind:value={email}
+        placeholder="Email"
+        on:keydown={(e) => e.key === 'Enter' && enter()}
+      />
+    </div>
     <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-callback="verify"></div>
     <p id="mes">{s}</p>
       <button on:click={enter}>Enter</button>
@@ -100,6 +116,33 @@
     flex-direction: column;
     width: 300px;
     gap: 10px;
+  }
+  .inputs input{
+    border: none;
+    outline: none;
+    width: 250px;
+    margin: 0px;
+  }
+  .inputs button{
+    background-color: #ffffff;
+    border: none;
+    padding: 0;
+    margin-left: auto;
+    margin-right: 10px;
+  }
+  .inputs button::after{
+    display: none;
+  }
+  .inputs{
+    background-color: #ffffff;
+    width: 300px;
+    height: 35px;
+    margin-top: 10px;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    text-align: left;
+    align-items: center;
+    display: flex;
   }
   .cf-turnstile{
     margin-top: 20px;

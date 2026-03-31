@@ -26,12 +26,30 @@
 //     throw new Error(error.message)
 //   }
 // }
+import {logout} from '../lib/auth.js'
 
 const API_BASE='http://localhost:8000/api';
 
 export async function get(path){
+  const token=localStorage.getItem("token");
+  const headers={
+    'Content-Type': 'application/json'
+  }
+  if(token)
+    headers['Authorization']=`Bearer ${token}`;
+
   try{
-    const res=await fetch(`${API_BASE}${path}`);
+    const res=await fetch(`${API_BASE}${path}`,{
+      method: 'GET',
+      headers: headers
+    });
+
+    if(res.status==401){
+      logout();
+      const event=new CustomEvent('token_expired');
+      window.dispatchEvent(event);
+      return null;
+    }
     return await res.json();
   }catch(error){
     throw new Error(error.message);
