@@ -6,6 +6,7 @@
   import Desktop from './page/desktop.svelte';  
   import Signup from './page/Signup.svelte';
   import DesktopButton from './lib/desktop_button.svelte';
+  import Forget from './page/Forget.svelte';
 
   let currentPage = 'desktop';
   let roomId = '';
@@ -39,6 +40,10 @@
     currentPage = 'desktop';
     roomId = '';
   }
+
+  function handleForget() {
+    currentPage = 'forget';
+  }
 </script>
 
 {#if currentPage !== 'desktop'}
@@ -54,7 +59,7 @@
     on:logout={handleLogout}
   /> 
 {:else if currentPage === 'login'}
-  <Login on:login={handleHome} on:signup={handleSignup} on:desktop={handleHome}/>
+  <Login on:login={handleHome} on:signup={handleSignup} on:desktop={handleHome} on:forget={handleForget}/>
 {:else if currentPage === 'signup'}
   <Signup on:signup={handleHome} on:login={handleLogin}/>
 {:else if currentPage === 'room'}
