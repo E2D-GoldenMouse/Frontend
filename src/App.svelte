@@ -18,7 +18,23 @@
     });
     if (localStorage.getItem('token'))
       getusername();
-  });
+  
+    // 全域禁用拼寫檢查紅線
+    const handleFocus = (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+        e.target.setAttribute('spellcheck', 'false');
+      }
+    };
+    window.addEventListener('focusin', handleFocus);
+
+    // 初始檢查
+    if (localStorage.getItem('token')) getusername();
+
+    // 組件銷毀時移除監聽器
+    return () => {
+      window.removeEventListener('focusin', handleFocus);
+    };
+    });
 
   function handleLogin() {
     currentPage = 'login';
@@ -67,5 +83,5 @@
 {/if}
 
 <style>
-  /* 可以在這裡加一些全域樣式 */
+
 </style>

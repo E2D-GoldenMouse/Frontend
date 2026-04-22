@@ -45,6 +45,7 @@ function forget(){
         type="text"
         bind:value={username}
         placeholder="帳號"
+        spellcheck="false"
         on:keydown={(e) => e.key === 'Enter' && enter()}
       />
     </div>
